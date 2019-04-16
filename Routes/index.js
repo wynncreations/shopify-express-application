@@ -7,7 +7,7 @@ const querystring = require('querystring');
 const request = require('request-promise');
 const apiKey = process.env.apiKey;
 const apiSecret = process.env.apiSecret;
-const scopes = 'read_products';
+const scopes = 'read_orders';
 const forwardingAddress = "https://betterorders.herokuapp.com/shopify"; // Replace this with your HTTPS Forwarding address
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
