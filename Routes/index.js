@@ -97,8 +97,6 @@ router.get('/shopify/callback', (req, res) => {
                         headers: shopRequestHeaders
                     })
                     .then((shopResponse) => {
-                        //shopResponse.
-
                         res.end(shopResponse);
                     })
                     .catch((error) => {
