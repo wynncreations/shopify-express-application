@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
-
+const crypto = require('crypto');
+const cookie = require('cookie');
+const nonce = require('nonce')();
+const querystring = require('querystring');
+const request = require('request-promise');
+const apiKey = process.env.apiKey;
+const apiSecret = process.env.apiSecret;
+const scopes = 'read_products';
+const forwardingAddress = "https://betterorders.herokuapp.com/shopify"; // Replace this with your HTTPS Forwarding address
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now())
