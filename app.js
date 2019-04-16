@@ -10,7 +10,7 @@ const request = require('request-promise');
 const apiKey = process.env.apiKey;
 const apiSecret = process.env.apiSecret;
 const scopes = 'read_products';
-const forwardingAddress = "https://betterorders.heroku.com/shopify"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://betterorders.herokuapp.com/shopify"; // Replace this with your HTTPS Forwarding address
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -20,7 +20,7 @@ app.get('/shopify', (req, res) => {
     const shop = req.query.shop;
     if (shop) {
         const state = nonce();
-        const redirectUri = forwardingAddress + '/shopify/callback';
+        const redirectUri = forwardingAddress + '/callback';
         const installUrl = 'https://' + shop +
             '/admin/oauth/authorize?client_id=' + apiKey +
             '&scope=' + scopes +
