@@ -88,7 +88,7 @@ router.get('/shopify/callback', (req, res) => {
             .then((accessTokenResponse) => {
                 const accessToken = accessTokenResponse.access_token;
 
-                const shopRequestUrl = 'https://' + shop + '/admin/api/2019-04/orders.json';
+                const shopRequestUrl = 'https://' + shop + '/admin/api/2019-04/shop.json';
                 const shopRequestHeaders = {
                     'X-Shopify-Access-Token': accessToken,
                 };
@@ -97,6 +97,8 @@ router.get('/shopify/callback', (req, res) => {
                         headers: shopRequestHeaders
                     })
                     .then((shopResponse) => {
+                        //shopResponse.
+
                         res.end(shopResponse);
                     })
                     .catch((error) => {
