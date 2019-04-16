@@ -7,8 +7,8 @@ const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
 
-const apiKey = process.env.SHOPIFY_API_KEY;
-const apiSecret = process.env.SHOPIFY_API_SECRET;
+const apiKey = process.env.apiKey;
+const apiSecret = process.env.apiSecret;
 const scopes = 'read_products';
 const forwardingAddress = "https://betterorders.heroku.com/shopify"; // Replace this with your HTTPS Forwarding address
 
@@ -35,5 +35,5 @@ app.get('/shopify', (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080, () => {
-    console.log('Example app listening on port 3000!');
+    console.log('Example app listening on port' + process.env.PORT || 8080  + ' !');
 });
