@@ -33,7 +33,50 @@ app.get('/shopify', (req, res) => {
         return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
     }
 });
+app.get('/shopify/callback', (req, res) => {
+    const {
+        shop,
+        hmac,
+        code,
+        state
+    } = req.query;
+    const stateCookie = cookie.parse(req.headers.cookie).state;
 
+    if (state !== stateCookie) {
+        return res.status(403).send('Request origin cannot be verified');
+    }
+
+    if (shop && hmac && code) {
+        const map = Object.assign({}, req.query);
+        delete map['signature'];
+        delete map['hmac'];
+        const message = querystring.stringify(map);
+        const providedHmac = Buffer.from(hmac, 'utf-8');
+        const generatedHash = Buffer.from(
+            crypto
+            .createHmac('sha256', apiSecret)
+            .update(message)
+            .digest('hex'),
+            'utf-8'
+        );
+        let hashEquals = false;
+        // timingSafeEqual will prevent any timing attacks. Arguments must be buffers
+        try {
+            hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
+            // timingSafeEqual will return an error if the input buffers are not the same length.
+        } catch (e) {
+            hashEquals = false;
+        };
+
+        if (!hashEquals) {
+            return res.status(400).send('HMAC validation failed');
+        }
+
+        res.status(200).send('HMAC validated');
+    } else {
+        res.status(400).send('Required parameters missing');
+    }
+});
 app.listen(process.env.PORT || 8080, () => {
     console.log('Example app listening on port' + process.env.PORT || 8080  + ' !');
 });
