@@ -11,7 +11,7 @@ router.get('/', (req,res,next)=>{
 
 });
 
-app.get('/shopify', (req, res) => {
+router.get('/shopify', (req, res) => {
     const shop = req.query.shop;
     if (shop) {
         const state = nonce();
@@ -28,7 +28,7 @@ app.get('/shopify', (req, res) => {
         return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
     }
 });
-app.get('/shopify/callback', (req, res) => {
+router.get('/shopify/callback', (req, res) => {
     const {
         shop,
         hmac,
