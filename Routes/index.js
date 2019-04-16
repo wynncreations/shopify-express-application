@@ -103,4 +103,4 @@ router.get('/shopify/callback', (req, res) => {
     }
 });
 
-modules.export = router;
+module.exports = router;
